@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Basic Metadata -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TaskMaster Pro - Advanced To-Do List</title>
+    <meta name="description" content="TaskMaster Pro is a powerful and intuitive to-do list app to manage your daily tasks with ease. Track, prioritize, and stay organized!">
+    <meta name="keywords" content="task manager, to-do list, productivity app, taskmaster pro, daily planner, task tracker">
+    <meta name="author" content="Ismail Ibrahim Mensah (Discipline)">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:title" content="TaskMaster Pro - Advanced To-Do List">
+    <meta property="og:description" content="Boost your productivity with TaskMaster Pro. Manage your tasks, set priorities, and stay on track!">
+    <meta property="og:image" content="https://example.com/preview.jpg">
+    <meta property="og:url" content="https://yourdomain.com">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="TaskMaster Pro - Advanced To-Do List">
+    <meta name="twitter:description" content="Manage your tasks effectively with TaskMaster Pro – your smart task manager.">
+    <meta name="twitter:image" content="https://example.com/preview.jpg">
+
+    <!-- Favicon & Manifest -->
+    <link rel="icon" href="icons/icon-192.png" type="image/png">
+    <link rel="manifest" href="/js/manifest.json">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <button id="theme-toggle"><i class="fas fa-moon"></i></button>
+
+    <div class="container">
+        <div class="app-header">
+            <i class="fas fa-check-double app-logo"></i>
+            <h1>TaskMaster Pro</h1>
+        </div>
+
+        <div class="stats-bar">
+            <div class="stat">
+                <i class="fas fa-tasks"></i>
+                <span id="total-tasks">0 tasks</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-check"></i>
+                <span id="completed-tasks">0 completed</span>
+            </div>
+            <div class="stat">
+                <i class="fas fa-hourglass-half"></i>
+                <span id="remaining-tasks">0 remaining</span>
+            </div>
+        </div>
+        
+        <div class="filters">
+            <button class="filter-btn active" data-filter="all">
+                <i class="fas fa-list"></i> All
+            </button>
+            <button class="filter-btn" data-filter="active">
+                <i class="fas fa-spinner"></i> Active
+            </button>
+            <button class="filter-btn" data-filter="completed">
+                <i class="fas fa-check-circle"></i> Completed
+            </button>
+           
+            
+            <button id="export-btn" class="utility-btn">
+                <i class="fas fa-file-export"></i> Export Tasks
+            </button>
+            <input type="file" id="import-input" accept=".json" hidden>
+            <label for="import-input" class="utility-btn">
+                <i class="fas fa-file-import"></i> Import Tasks
+            </label>    
+        </div>
+        
+        <div class="input-section">
+            <input type="text" id="task-input" placeholder="Add a new task...">
+            <button id="add-btn">
+                <i class="fas fa-plus"></i> Add
+            </button>
+        </div>
+        
+        <ul id="task-list">
+            <li class="empty-message">No tasks yet. Add a task to get started!</li>
+        </ul>
+        
+        <div class="footer">
+            Made with <span>♥</span> by Ismail Ibrahim Mensah (Discipline) | <span id="current-date"></span>
+        </div>
+    </div>
+    
+    <div id="task-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit Task</h2>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-form-group">
+                <label class="modal-label" for="edit-task-input">Task Description:</label>
+                <input type="text" id="edit-task-input" class="modal-input">
+            </div>
+            <div class="modal-form-group">
+                <label class="modal-label" for="edit-priority">Priority:</label>
+                <select id="edit-priority" class="modal-select">
+                    <option value="low">Low</option>
+                    <option value="medium">Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+            <div class="modal-form-group">
+                <label class="modal-label" for="edit-due-date">Due Date (Optional):</label>
+                <input type="date" id="edit-due-date" class="modal-input">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn cancel-btn">Cancel</button>
+                <button class="modal-btn save-btn">Save Changes</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="notification" id="notification">
+        <i class="fas fa-check-circle"></i>
+        <span id="notification-message"></span>
+    </div>
+
+    <script src="js/script.js"></script>
+    <script>
+         // Service Worker Registration
+            if ('serviceWorker' in navigator) {
+                window.addEventListener('load', () => {
+                    navigator.serviceWorker.register('/js/service-worker.js')
+                        .then(reg => console.log('✅ Service Worker registered:', reg.scope))
+                        .catch(err => console.error('❌ Service Worker registration failed:', err));
+                });
+            }
+     </script>       
+</body>          
+</html>
