@@ -13,10 +13,11 @@ const ASSETS = [
 self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Caching assets...');
+      console.log('✅ Caching app shell...');
       return cache.addAll(ASSETS);
     })
   );
+  self.skipWaiting(); // Activate worker immediately
 });
 
 // Activate and Clean Old Caches
@@ -26,18 +27,27 @@ self.addEventListener('activate', event => {
       Promise.all(keys.filter(key => key !== CACHE_NAME).map(key => caches.delete(key)))
     )
   );
+  self.clients.claim(); // Claim control immediately
 });
 
 // Fetch from Cache or Network
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request).catch(() => {
+    caches.match(event.request).then(cachedResponse => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).catch(() => {
+        // Fallback for navigation when offline
         if (event.request.mode === 'navigate') {
           return caches.match('/index.html');
+        }
+        // Optional: fallback image if needed
+        if (event.request.destination === 'image') {
+          return caches.match('/icons/icon-192.png');
         }
       });
     })
   );
 });
-

@@ -1,11 +1,12 @@
 {
   "name": "TaskMaster Pro",
   "short_name": "TaskMaster",
-  "start_url": "/index.html",
+  "start_url": "/index.html?homescreen=1",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#4CAF50",
   "orientation": "portrait",
+  "scope": "/",
   "icons": [
     {
       "src": "/icons/icon-192.png",
